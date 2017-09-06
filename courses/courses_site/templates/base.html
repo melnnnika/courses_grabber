@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Courses</title>
+        <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    </head>
+
+    <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% block content %}{% endblock content %}
+    </body>
+
+
+<script type="text/javascript"> 
+    var new_href = '';
+    var checkboxValues = JSON.parse(sessionStorage.getItem('checkboxValues')) || {},
+
+    $checkboxes_cat = $(".category");
+    $checkboxes_prov = $(".provider");
+    $checkboxes_sour = $(".source");
+    $checkboxes_lang = $(".lang");
+    $checkboxes_dur = $(".duration");
+
+    $all_checkboxes = $("[type=checkbox]");
+    $($all_checkboxes).change(function(){
+        new_href+='?c=';
+        $checkboxes_cat.each(function(){
+            checkboxValues[this.id] = this.checked;
+                if (this.checked===true){
+                    new_href += this.id+'_';
+        
+                }
+        });
+        new_href+='&p=';
+
+        $checkboxes_prov.each(function(){
+            checkboxValues[this.id] = this.checked;
+                if (this.checked===true){
+                    new_href += this.id+'_';
+        
+                }
+        });
+        new_href+='&s=';
+        $checkboxes_sour.each(function(){
+            checkboxValues[this.id] = this.checked;
+                if (this.checked===true){
+                    new_href += this.id+'_';
+        
+                }
+        });
+        new_href+='&l=';
+        $checkboxes_lang.each(function(){
+            checkboxValues[this.id] = this.checked;
+                if (this.checked===true){
+                    new_href += this.id+'_';
+        
+                }
+        });
+        new_href+='&d=';
+        $checkboxes_dur.each(function(){
+            checkboxValues[this.id] = this.checked;
+                if (this.checked===true){
+                    new_href += this.id+'_';
+        
+                }
+        });
+    window.location = new_href.slice(0, -1);
+    sessionStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+    
+    });
+
+    $.each(checkboxValues, function(key, value) {
+        key = key.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');
+        $("[id='"+key+"']").prop('checked', value);
+    });
+       
+</script>
+
+</html>
